@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
   $(".Login").hide();
+  $(".userDetails").hide();
   Boards();
   $(".otpcheck").hide();
 
@@ -617,6 +618,7 @@ $("#callPhone").val("");
 //login & register 
 
 $(".register").click(function(){
+  Otpvla=""
 $(".Login").hide();
 $(".Register").show();
 })
@@ -679,10 +681,13 @@ $("#PhonenoError").html("")
 }
 
 else{
-  
+  let Otpvla ="";
   axios.post('https://api.gharpeshiksha.com/OnlineCourseStudentLogin/accountVerification',param)
   .then(function(response){
      if(response){
+    
+      
+      const isProfileCompleted =response.data.ProfileCompleted;
       const inputs=document.querySelectorAll(".setOTP")
 // console.log(inputs)
 inputs.forEach((input,index1)=>{
@@ -693,6 +698,13 @@ inputs.forEach((input,index1)=>{
     if(currentInput.value.length>1){
       currentInput.value="";
       return;
+    }
+    else{
+      Otpvla=Otpvla+currentInput.value;
+      $(".register").click(function(){
+        Otpvla="",
+        currentInput.value=""
+      })
     }
     if(nextInput && nextInput.hasAttribute("disabled") && currentInput.vlaue !=0){
       nextInput.removeAttribute("disabled");
@@ -717,23 +729,44 @@ inputs.forEach((input,index1)=>{
 
      axios.post('https://api.gharpeshiksha.com/OnlineCourseStudentLogin/sendotp',param)
     .then(function(response){
+      console.log(response,"second")
+if(response.data.Status=="Success"){
+
 
       $("#verify").click(function(){
-
+   
      
-      const otp =$(".setOTP:first").val();
-console.log(otp,"otp")
-      console.log(response,"otpresponse")
+   
       if(response){
         const SessionId=response.data.SessionId;
-       
+       $("#verify").click(function(){
+
+
 
         const param=new URLSearchParams()
         param.append("otp_phone",`${Phoneno}`);
-        param.append("sessionid",`${SessionId}`)
+        param.append("sessionId",`${SessionId}`);
+        param.append("otp",`${Otpvla}`)
+        axios.post("https://api.gharpeshiksha.com/OnlineCourseStudentLogin/verifyotp",param)
+        .then(function(response){
+          console.log(response.data.result)
+          if(response.data.result="Matched"){
+            console.log("isProfileCompleted",isProfileCompleted)
 
+            if(isProfileCompleted=="undefined" ||isProfileCompleted=="userDetails"){
+              console.log("hogya")
+
+              $(".userDetails").show();
+            }
+           
+            
+          }
+        })
+
+      })
       }
     })
+  }
     })
     
       $(".Login").show();
