@@ -701,10 +701,7 @@ inputs.forEach((input,index1)=>{
     }
     else{
       Otpvla=Otpvla+currentInput.value;
-      $(".register").click(function(){
-        Otpvla="",
-        currentInput.value=""
-      })
+  
     }
     if(nextInput && nextInput.hasAttribute("disabled") && currentInput.vlaue !=0){
       nextInput.removeAttribute("disabled");
