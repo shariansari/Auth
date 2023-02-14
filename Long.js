@@ -3,6 +3,7 @@
 $(document).ready(function () {
   $(".Login").hide();
   Boards();
+  $(".otpcheck").hide();
 
   function Boards (Def ="10th Class") {
     // console.log(Def,"hhh");
@@ -23,7 +24,7 @@ $(document).ready(function () {
 
   });
 }
-///
+
 
 function Boards9 (Def ="9th Class") {
     // console.log(Def,"hhh");
@@ -620,6 +621,7 @@ $(".Login").hide();
 $(".Register").show();
 })
 $(".login").click(function(){
+  $(".otpcheck").show();
 $(".Login").show();
 $(".Register").hide();
 })
@@ -646,25 +648,107 @@ const param =new URLSearchParams()
 // param.append("studentsEmail",`${Email}`);
 param.append("phone",`${Phoneno}`);
 // param.append("password",`${Password}`);
+// console.log(Phoneno[0])
+// if(Phoneno[0]!=9){
+//   console.log("error")
+// }
+// else{
+//   console.log("is9")
+// }
 
 if(Phoneno===""){
     $("#PhonenoError").html("Fields Can't be empty *")
+     setTimeout(() => {
+ $("#PhonenoError").html("")
+    }, 2500);
+
 
 }
+if(Phoneno.length!=10){
+  $("#PhonenoError").html("Invalid Fields *")
+  setTimeout(() => {
+$("#PhonenoError").html("")
+ }, 2500);
+
+}
+if(Phoneno[0]==1 || Phoneno[0]==2 || Phoneno[0]==3 || Phoneno[0]==4 ||Phoneno[0]==5 ||Phoneno[0]==0){
+  $("#PhonenoError").html("Invalid Fields *")
+  setTimeout(() => {
+$("#PhonenoError").html("")
+ }, 2500);
+}
+
 else{
-  alert()
+  
   axios.post('https://api.gharpeshiksha.com/OnlineCourseStudentLogin/accountVerification',param)
   .then(function(response){
-     console.log(response);
-     if(data.ProfileCompleted!=true && data.UserExists!=true){
-      $("#PhonenoError").html("Invalid Fields *")
+     if(response){
+      const inputs=document.querySelectorAll(".setOTP")
+// console.log(inputs)
+inputs.forEach((input,index1)=>{
+  input.addEventListener("keyup",(e)=>{
+    const currentInput =input,
+    nextInput =input.nextElementSibling;
+    previousInput=input.previousElementSibling;
+    if(currentInput.value.length>1){
+      currentInput.value="";
+      return;
+    }
+    if(nextInput && nextInput.hasAttribute("disabled") && currentInput.vlaue !=0){
+      nextInput.removeAttribute("disabled");
+      nextInput.focus()
+
+    }
+    if(e.key==="Backspace"){
+      inputs.forEach((input,index2)=>{
+        if(index1 <= index2 && previousInput){
+          input.setAttribute("disabled",true)
+          currentInput.value="";
+          previousInput.focus();
+        }
+      })
+    }
+
+  })
+})
+
+      const param =new URLSearchParams()
+      param.append("phone",`${Phoneno}`);
+
+     axios.post('https://api.gharpeshiksha.com/OnlineCourseStudentLogin/sendotp',param)
+    .then(function(response){
+
+      $("#verify").click(function(){
+
+     
+      const otp =$(".setOTP:first").val();
+console.log(otp,"otp")
+      console.log(response,"otpresponse")
+      if(response){
+        const SessionId=response.data.SessionId;
+       
+
+        const param=new URLSearchParams()
+        param.append("otp_phone",`${Phoneno}`);
+        param.append("sessionid",`${SessionId}`)
+
+      }
+    })
+    })
+    
+      $(".Login").show();
+      $(".otpcheck").show();
+      $(".Register").hide();
+
 
      }
+    
 
   })
 
 }
 })
+
 // if(Name === "" && Email ==="" && Phoneno ==="" && Password ===""){
 // $("#NameError").html("Fields Can't be empty *")
 // $("#EmailError").html("Fields Can't be empty *")

@@ -2222,6 +2222,35 @@ loginRight{
     height: 36px;
     margin: 0 auto;
 }
+.otpcheck{
+    background: rgb(0, 123, 255);
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+.otpFields{
+    display: flex;
+    column-gap: 5px;
+}
+
+
+.setOTP{
+    width: 30px;
+    height: 32px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 1.125rem;
+    text-align: center;
+    border:1px solid #ddd
+}
+.otpFields input::-webkit-inner-spin-button,
+.otpFields input::-webkit-inner-spin-button{
+    display: none;
+}
+
 
 /* .class9 .slick-track{
     opacity: 1 !important;
