@@ -758,11 +758,13 @@ if(response.data.Status=="Success"){
               isUserExists,
              })
 
-            if(isProfileCompleted=="undefined" ||isProfileCompleted=="userdetails"){
-              console.log("hogya")
-
+            if(isProfileCompleted==null ||isProfileCompleted=="userdetails"){
+              
+               $(".Login").hide();
               $(".userDetails").show();
               $(".drlogin").hide();
+              $(".otpcheck").hide();
+
             }
             if(isProfileCompleted=="true" && isUserExists=="true"){
             
