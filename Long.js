@@ -1,6 +1,11 @@
 
 
 $(document).ready(function () {
+  
+  $(".basicinfo").hide();
+  $(".Register").show();
+  $(".drlogin").hide();
+  $(".otpForLogin").hide();
   $(".Login").hide();
   $(".userDetails").hide();
   Boards();
@@ -629,7 +634,35 @@ $(".Register").hide();
 })
 
 
+const inputs=document.querySelectorAll(".setOTP")
+// console.log(inputs)
+inputs.forEach((input,index1)=>{
+  input.addEventListener("keyup",(e)=>{
+    const currentInput =input,
+    nextInput =input.nextElementSibling;
+    previousInput=input.previousElementSibling;
+    if(currentInput.value.length>1){
+      currentInput.value="";
+      return;
+    }
+   
+    if(nextInput && nextInput.hasAttribute("disabled") && currentInput.vlaue !=0){
+      nextInput.removeAttribute("disabled");
+      nextInput.focus()
 
+    }
+    if(e.key==="Backspace"){
+      inputs.forEach((input,index2)=>{
+        if(index1 <= index2 && previousInput){
+          input.setAttribute("disabled",true)
+          currentInput.value="";
+          previousInput.focus();
+        }
+      })
+    }
+
+  })
+})
 $("#signup").click(function(){
   Phoneno=$("#EnterPhoneno").val();
 
@@ -681,45 +714,16 @@ $("#PhonenoError").html("")
 }
 
 else{
-  let Otpvla ="";
+
   axios.post('https://api.gharpeshiksha.com/OnlineCourseStudentLogin/accountVerification',param)
   .then(function(response){
      if(response){
+       localStorage.setItem("phoneno",Phoneno)
     
       
       const isProfileCompleted =response.data.ProfileCompleted;
-      const inputs=document.querySelectorAll(".setOTP")
-// console.log(inputs)
-inputs.forEach((input,index1)=>{
-  input.addEventListener("keyup",(e)=>{
-    const currentInput =input,
-    nextInput =input.nextElementSibling;
-    previousInput=input.previousElementSibling;
-    if(currentInput.value.length>1){
-      currentInput.value="";
-      return;
-    }
-    else{
-      Otpvla=Otpvla+currentInput.value;
-  
-    }
-    if(nextInput && nextInput.hasAttribute("disabled") && currentInput.vlaue !=0){
-      nextInput.removeAttribute("disabled");
-      nextInput.focus()
+      const isUserExists=response.data.UserExists
 
-    }
-    if(e.key==="Backspace"){
-      inputs.forEach((input,index2)=>{
-        if(index1 <= index2 && previousInput){
-          input.setAttribute("disabled",true)
-          currentInput.value="";
-          previousInput.focus();
-        }
-      })
-    }
-
-  })
-})
 
       const param =new URLSearchParams()
       param.append("phone",`${Phoneno}`);
@@ -730,30 +734,47 @@ inputs.forEach((input,index1)=>{
 if(response.data.Status=="Success"){
 
 
-      $("#verify").click(function(){
+      
    
-     
    
       if(response){
         const SessionId=response.data.SessionId;
        $("#verify").click(function(){
 
 
+        const otpval =`${document.getElementsByClassName("setOTP")[0].value}${document.getElementsByClassName("setOTP")[1].value}${document.getElementsByClassName("setOTP")[2].value}${document.getElementsByClassName("setOTP")[3].value}${document.getElementsByClassName("setOTP")[4].value}${document.getElementsByClassName("setOTP")[5].value}`
 
         const param=new URLSearchParams()
         param.append("otp_phone",`${Phoneno}`);
         param.append("sessionId",`${SessionId}`);
-        param.append("otp",`${Otpvla}`)
+        param.append("otp",`${otpval}`)
+        console.log(otpval,"otpis")
         axios.post("https://api.gharpeshiksha.com/OnlineCourseStudentLogin/verifyotp",param)
         .then(function(response){
           console.log(response.data.result)
           if(response.data.result="Matched"){
-            console.log("isProfileCompleted",isProfileCompleted)
+             console.log({
+              isProfileCompleted,
+              isUserExists,
+             })
 
-            if(isProfileCompleted=="undefined" ||isProfileCompleted=="userDetails"){
+            if(isProfileCompleted=="undefined" ||isProfileCompleted=="userdetails"){
               console.log("hogya")
 
               $(".userDetails").show();
+              $(".drlogin").hide();
+            }
+            if(isProfileCompleted=="true" && isUserExists=="true"){
+            
+              $(".Login").hide();
+              $(".drlogin").show();
+              $(".otpcheck").hide();
+
+
+            }
+            if(isProfileCompleted=="basicinfo"){
+              $(".basicinfo").show();
+
             }
            
             
@@ -762,7 +783,7 @@ if(response.data.Status=="Success"){
 
       })
       }
-    })
+    
   }
     })
     
@@ -778,6 +799,269 @@ if(response.data.Status=="Success"){
 
 }
 })
+
+//userdetails
+$("#userverify").click(function(){
+  userPhone=localStorage.getItem("phoneno")
+  userName =$("#userName").val();
+  userEmail=$("#userEmail").val();
+  userpassword=$("#userpassword").val();
+  passwordCnfrm=$("#passwordCnfrm").val();
+   
+  
+  if(userName == "" && userEmail === "" && userpassword === "" &&  passwordCnfrm === ""){
+    $("#NameError").html("Fields Can't be empty *")
+    $("#EmailError").html("Fields Can't be empty *")
+    $("#PassawordError").html("Fields Can't be empty *")
+   $("#ConfrmError").html("Fields Can't be empty *")
+    setTimeout(() => {
+ $("#NameError").html("")
+ $("#EmailError").html("")
+$("#PassawordError").html("")
+$("#ConfrmError").html("")
+    }, 2500);
+
+  }
+ if(userName===""){
+    $("#NameError").html(" Fields Can't be empty *")
+    setTimeout(() => {
+    $("#NameError").html("")
+    $("#EmailError").html("")
+    $("#PassawordError").html("")
+    $("#ConfrmError").html("")
+        }, 2500);
+    }
+ if(userEmail===""){
+      $("#EmailError").html("Fields Can't be empty *")
+      setTimeout(() => {
+      $("#NameError").html("")
+      $("#EmailError").html("")
+      $("#PassawordError").html("")
+      $("#ConfrmError").html("")
+          }, 2500);
+      }
+   if(userpassword===""){
+        $("#PassawordError").html("Fields Can't be empty *")
+        setTimeout(() => {
+        $("#NameError").html("")
+        $("#EmailError").html("")
+        $("#PassawordError").html("")
+        $("#ConfrmError").html("")
+            }, 2500);
+        }
+     if(passwordCnfrm===""){
+          $("#ConfrmError").html("Fields Can't be empty *")
+          setTimeout(() => {
+          $("#NameError").html("")
+          $("#EmailError").html("")
+          $("#PassawordError").html("")
+          $("#ConfrmError").html("")
+              }, 2500);
+          }
+           else if(!userEmail.includes("@")){
+            $("#EmailError").html("Email must have @ *")
+            setTimeout(() => {
+            $("#NameError").html("")
+            $("#EmailError").html("")
+            $("#PassawordError").html("")
+            $("#ConfrmError").html("")
+                }, 2500);
+            
+            }
+         
+            else  if(userpassword.length<6){
+         $("#PassawordError").html("Password Should not be less than 6 *")
+      setTimeout(() => {
+      $("#NameError").html("")
+      $("#EmailError").html("")
+      $("#PassawordError").html("")
+      $("#ConfrmError").html("")
+       }, 2500);
+}
+        else  if(userpassword.length>12){
+       $("#PassawordError").html("Password Should not be greater than 12 *")
+      setTimeout(() => {
+      $("#NameError").html("")
+    $("#EmailError").html("")
+     $("#PassawordError").html("")
+    $("#ConfrmError").html("")
+    }, 2500);
+}
+else if(userpassword !=passwordCnfrm){
+              
+  $("#ConfrmError").html("Passwrd not matches *")
+  setTimeout(() => {
+  $("#NameError").html("")
+  $("#EmailError").html("")
+  $("#PassawordError").html("")
+  $("#ConfrmError").html("")
+      }, 2500);
+
+}
+else{
+  const param=new URLSearchParams()
+  
+  param.append("phone",`${userPhone}`);
+  param.append("email",`${userEmail}`);
+  param.append("name",`${userName}`)
+  param.append("setPassword",`${userpassword}`)
+  
+  axios.post("https://api.gharpeshiksha.com/OnlineCourseStudentLogin/studentSignUp",param)
+  .then(function(response){
+    console.log(response.data)
+  
+  })
+}
+})
+//userdetails
+//basicinfo
+axios.get("https://api.gharpeshiksha.com/OnlineCourseStudentLogin/getBoards")
+.then(function(response){
+  const BoardsToSelect =response.data.boards
+  BoardsToSelect.forEach((item)=>{
+    const boardSelected =document.querySelector("#BasicBoard");
+    const options =document.createElement("option");
+    const optionval =`${item}`
+    options.innerHTML += optionval;
+    boardSelected.appendChild(options);
+
+  })
+
+
+})
+
+$("#Basicverify").click(function(){
+  userPhone=localStorage.getItem("phoneno")
+  BasicSchoolName =$("#BasicSchoolName").val();
+  BasicLocation=$("#BasicLocation").val();
+  BasicClass=$("#BasicClass").val();
+  BasicBoard=$("#BasicBoard").val();
+  console.log({
+    BasicSchoolName,
+    BasicLocation,
+    BasicClass,
+    BasicBoard,
+  })
+  if(BasicSchoolName == "" || BasicLocation === ""){
+    $("#SchoolNameError").html("Fields Can't be empty *")
+   
+    setTimeout(() => {
+ $("#SchoolNameError").html("")
+
+    }, 2500);
+
+  }
+  else{
+    const param=new URLSearchParams()
+    param.append("phone",`${userPhone}`);
+    param.append("course",`${BasicClass}`);
+    param.append("school",`${BasicSchoolName}`)
+    param.append("location",`${BasicLocation}`)
+    param.append("board",`${BasicBoard}`)
+    axios.post("https://api.gharpeshiksha.com/OnlineCourseStudentLogin/studentInfo",param)
+    .then(function(response){
+      console.log(response.data.Message)
+      if(response.data.Message=="successfully registered"){
+        alert("registerd Successfully")
+      }
+    
+    })
+  }
+})
+//basicinfo
+//direltlogin
+userPhone=localStorage.getItem("phoneno")
+  $("#DirectPhoneno").val(`${userPhone}`)
+$(".doLogin").click(function(){
+
+ 
+ 
+  DirectPhone =$("#DirectPhoneno").val();
+  DirectPassword=$("#DirectPassword").val();
+
+  const param=new URLSearchParams()
+  param.append("phone",`${DirectPhone}`);
+  param.append("password",`${DirectPassword}`);
+  axios.post("https://api.gharpeshiksha.com/OnlineCourseStudentLogin/studentLogin",param)
+  .then(function(response){
+    if(response.data.Message=="Login successfull"){
+      alert("login susscessfully")
+    }
+    if(response.data.Message=="Incorrect user or password"){
+      $("#Loginerror").html("Phone and Passaword not matches *")
+         
+    setTimeout(() => {
+      $("#Loginerror").html("")
+     
+         }, 2500);
+     
+    }
+   
+  
+  })
+ 
+})
+$(".OptAtsignin").click(function(){
+  $(".drlogin").hide();
+  $(".otpForLogin").show();
+  $(".otpcheck").show();
+  const param =new URLSearchParams()
+
+  param.append("phone",`${userPhone}`);
+  axios.post('https://api.gharpeshiksha.com/OnlineCourseStudentLogin/sendotp',param)
+  .then(function(response){
+      
+    if(response){
+      const SessionId=response.data.SessionId;
+     $("#DosLogin").click(function(){
+
+
+      const otpval =`${document.getElementsByClassName("setOTP")[6].value}${document.getElementsByClassName("setOTP")[7].value}${document.getElementsByClassName("setOTP")[8].value}${document.getElementsByClassName("setOTP")[9].value}${document.getElementsByClassName("setOTP")[10].value}${document.getElementsByClassName("setOTP")[11].value}`
+console.log(otpval,"fsdf")
+      const param=new URLSearchParams()
+      param.append("otp_phone",`${userPhone}`);
+      param.append("sessionId",`${SessionId}`);
+      param.append("otp",`${otpval}`)
+      console.log(otpval,"otpis")
+      axios.post("https://api.gharpeshiksha.com/OnlineCourseStudentLogin/verifyotp",param)
+      .then(function(response){
+        console.log(response.data.result)
+        if(response.data.result="Matched"){
+         
+alert("login susccessfully")
+          // if(isProfileCompleted=="undefined" ||isProfileCompleted=="userdetails"){
+          //   console.log("hogya")
+
+          //   $(".userDetails").show();
+          //   $(".drlogin").hide();
+          // }
+          // if(isProfileCompleted=="true" && isUserExists=="true"){
+          
+          //   $(".Login").hide();
+          //   $(".drlogin").show();
+          //   $(".otpcheck").hide();
+
+
+          // }
+          // if(isProfileCompleted=="basicinfo"){
+          //   $(".basicinfo").show();
+
+          // }
+         
+          
+        }
+      })
+
+    })
+    }
+     
+  })
+
+
+
+
+})
+//direltlogin
 
 // if(Name === "" && Email ==="" && Phoneno ==="" && Password ===""){
 // $("#NameError").html("Fields Can't be empty *")

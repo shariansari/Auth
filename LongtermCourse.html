@@ -945,7 +945,7 @@ rel="stylesheet"
                   <div class="otpcheck "><i class="bi bi-shield-fill-check" style="font-size: 35px;margin-top: 8px;color: white;"></i></div>
         
                   <form class="Login">
-               <div class="input-field otpFields">
+               <div class="input-field otpFields" style="justify-content: center;">
                 <input  class="setOTP"type="number"/>
                 <input class="setOTP"type="number" disabled/>
                 <input  class="setOTP"type="number" disabled/>
@@ -954,68 +954,173 @@ rel="stylesheet"
                 <input class="setOTP" type="number"disabled/>
 
                </div>
-        
+               
                    
                     
         
         
-                    <div class="pt-1 mb-4">
+                    <div class="pt-1 mb-4" style="display:flex;justify-content: center;">
                       <button class="btn dd" type="button" id="verify">Verify OTP</button>
                     </div>
-        
+                    <div  style="text-align: center;margin-top: 10px;color: #297CBA;">Resend otp</div>
+                    <p style="color: grey;font-size: 12px;text-align: center;">Before Verifing makesure you agree MarksChamp Term and condition and Privacy policy</p>
                 
           <p style="font-size: 13px;">Want to Change Phone no? <span style="text-decoration: underline;color:blue;" class="register">Edit<i class="bi bi-pencil-square"></i></span></p>
 
         
                   </form>
+                  <form class="Register">
+        
+        
+          
+       
+                    <div class="form-outline">
+                      <input type="number" id="EnterPhoneno" class="form-control" />
+                      
+                      <label class="form-label" for="form12" style="font-size: .9rem;">Enter your Phone no</label>
+                    </div>
+                    
+          
+                    <div style="color: red;font-size: .8rem;" id="PhonenoError"></div>
+                    <div class="pt-1 mb-4">
+                      <button class="btn dd" type="button" id="signup">Next</button>
+                    </div>
+          
+                   <p class="display-4" style="font-size: 14px;color: grey;">We never share your credential</p>
+          
+                  </form>
          <!-- ///userDetails -->
          <form class="userDetails">
-          <div style="display: flex;flex-direction: column;row-gap:15px;">
+          <div style="display: flex;flex-direction: column;row-gap:10px;">
           <div class="form-outline">
             <input type="text" id="userName" class="form-control" />
             <label class="form-label" for="userName" style="font-size:0.9rem;">Name</label>
+            
           </div>
+          <div id="NameError" style="color: red;font-size: 12px;"></div>
           <div class="form-outline">
             <input type="text" id="userEmail" class="form-control" />
             <label class="form-label" for="userEmail" style="font-size:0.9rem;">Email</label>
           </div>
+          <div  id="EmailError"style="color: red;font-size: 12px;"></div>
+
           <div class="form-outline">
             <input type="password" id="userpassword" class="form-control" />
             <label class="form-label" for="userpassword"  style="font-size:0.9rem;">Passaword</label>
           </div>
+          <div id="PassawordError" style="color: red;font-size: 12px;"></div>
+
           <div class="form-outline">
             <input type="password" id="passwordCnfrm" class="form-control" />
             <label class="form-label" for="passwordCnfrm"  style="font-size:0.9rem;">Confirm Password</label>
           </div>
+          <div id="ConfrmError" style="color: red;font-size: 12px;"></div>
+
           
           <div class="pt-1 mb-4">
             <button class="btn dd" type="button" id="userverify">NEXT</button>
           </div>
         </div>
+
          </form>
        
          <!-- ///userDetails -->
-        
-         <form class="Register">
-        
-        
-          
-       
-          <div class="form-outline">
-            <input type="number" id="EnterPhoneno" class="form-control" />
-            
-            <label class="form-label" for="form12" style="font-size: .9rem;">Enter your Phone no</label>
-          </div>
-          
-
-          <div style="color: red;font-size: .8rem;" id="PhonenoError"></div>
+           <!-- ///Basicinfo -->
+           <form class="basicinfo" >
+            <div style="display: flex;flex-direction:column ;row-gap: 10px;">
+             
+              <div class="form-outline">
+                <input type="text" id="BasicSchoolName" class="form-control" />
+                <label class="form-label" for="userName" style="font-size:0.9rem;">Enter your School Name</label>
+                
+              </div>
+         
+              
+              <div class="form-outline">
+                <input type="text" id="BasicLocation" class="form-control" />
+                <label class="form-label" for="userName" style="font-size:0.9rem;">Enter Your Location</label>
+                
+              </div>
+              <select class="form-select" id="BasicClass" aria-label="Default select example">
+                <option selected value="Class XII">Class XII</option>
+                <option value="Class-XI">Class XI</option>
+                <option value="Class-X">Class X </option>
+                <option value="Class-IX">Class IX </option>
+              </select>
+              <select class="form-select" id="BasicBoard" aria-label="Default select example">
+               
+                
+              </select>
+              <div id="SchoolNameError" style="color: red;font-size: 12px;"></div>
+              
+                
           <div class="pt-1 mb-4">
-            <button class="btn dd" type="button" id="signup">Next</button>
+            <button class="btn dd" type="button" id="Basicverify">NEXT</button>
           </div>
+            </div>
+           </form>
 
-         <p class="display-4" style="font-size: 14px;color: grey;">We never share your credential</p>
+           <!-- ///Basicinfo -->
+           <!-- loginbypassword -->
+           <form class="drlogin">
+            <div style="display: flex;flex-direction: column;row-gap: 25px;">
+                
+              <div class="form-outline">
+                <input type="text" id="DirectPhoneno" class="form-control" />
+                <label class="form-label" for="userName">Phone no</label>
+                
+              </div>
+               
+              <div class="form-outline">
+                <input type="password" id="DirectPassword" class="form-control" />
+                <label class="form-label" for="userName">Passaword</label>
+                
+              </div>
+              
 
-        </form>
+            </div>
+            <div id="Loginerror" style="color:red;font-size: 12px;margin-top: 10px;"></div>
+            <div style="text-align: center; margin-top: 10px; ">OR</div>
+            <div style="text-align: center; color: #297CBA;margin-top: 5px; font-size: 14px;font-weight: 500;" class="OptAtsignin">Signin With OTP</div>
+            <div class="pt-1 mb-4">
+              <button class="btn dd doLogin" type="button">LOGIN</button>
+            </div>
+           </form>
+
+
+
+           <!-- ///otp -->
+           
+           <form class="otpForLogin">
+            <div class="input-field otpFields" style="justify-content: center;">
+             <input  class="setOTP"type="number"/>
+             <input class="setOTP"type="number" disabled/>
+             <input  class="setOTP"type="number" disabled/>
+             <input class="setOTP" type="number"disabled/>
+             <input class="setOTP" type="number" disabled/>
+             <input class="setOTP" type="number"disabled/>
+
+            </div>
+            
+                
+                 
+     
+     
+                 <div class="pt-1 mb-4" style="display:flex;justify-content: center;">
+                   <button class="btn dd" type="button" id="DosLogin">LOGIN</button>
+                 </div>
+                
+             
+     
+
+     
+               </form>
+           <!-- ///otp -->
+           <!-- loginbypassword -->
+
+
+        
+        
 
                 </div>
         
