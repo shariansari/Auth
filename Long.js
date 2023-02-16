@@ -710,14 +710,14 @@ if(Phoneno===""){
 
 
 }
-if(Phoneno.length!=10){
+else if(Phoneno.length!=10){
   $("#PhonenoError").html("Invalid Fields *")
   setTimeout(() => {
 $("#PhonenoError").html("")
  }, 2500);
 
 }
-if(Phoneno[0]==1 || Phoneno[0]==2 || Phoneno[0]==3 || Phoneno[0]==4 ||Phoneno[0]==5 ||Phoneno[0]==0){
+ else if(Phoneno[0]==1 || Phoneno[0]==2 || Phoneno[0]==3 || Phoneno[0]==4 ||Phoneno[0]==5 ||Phoneno[0]==0){
   $("#PhonenoError").html("Invalid Fields *")
   setTimeout(() => {
 $("#PhonenoError").html("")
@@ -725,7 +725,7 @@ $("#PhonenoError").html("")
 }
 
 else{
-  $(".loader-line").show();  
+  $(".loader-line").show(); 
 
 
   axios.post('https://api.gharpeshiksha.com/OnlineCourseStudentLogin/accountVerification',param)
