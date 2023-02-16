@@ -1,15 +1,15 @@
 
 
 $(document).ready(function () {
-  
+  $(".loader-line").hide();  
   $(".basicinfo").hide();
   $(".Register").show();
   $(".drlogin").hide();
   $(".otpForLogin").hide();
   $(".Login").hide();
   $(".userDetails").hide();
-  Boards();
   $(".otpcheck").hide();
+  Boards();
 
   function Boards (Def ="10th Class") {
     // console.log(Def,"hhh");
@@ -623,9 +623,17 @@ $("#callPhone").val("");
 //login & register 
 
 $(".register").click(function(){
-  Otpvla=""
+  $(".otpcheck").hide();
+
+
 $(".Login").hide();
 $(".Register").show();
+$(".loader-line").hide();  
+$(".basicinfo").hide();
+$(".drlogin").hide();
+$(".otpForLogin").hide();
+$(".Login").hide();
+$(".userDetails").hide();
 })
 $(".login").click(function(){
   $(".otpcheck").show();
@@ -664,6 +672,9 @@ inputs.forEach((input,index1)=>{
   })
 })
 $("#signup").click(function(){
+  
+
+
   Phoneno=$("#EnterPhoneno").val();
 
 
@@ -714,10 +725,14 @@ $("#PhonenoError").html("")
 }
 
 else{
+  $(".loader-line").show();  
+
 
   axios.post('https://api.gharpeshiksha.com/OnlineCourseStudentLogin/accountVerification',param)
   .then(function(response){
      if(response){
+      $(".loader-line").hide();  
+
        localStorage.setItem("phoneno",Phoneno)
     
       
@@ -740,6 +755,9 @@ if(response.data.Status=="Success"){
       if(response){
         const SessionId=response.data.SessionId;
        $("#verify").click(function(){
+      
+
+        
 
 
         const otpval =`${document.getElementsByClassName("setOTP")[0].value}${document.getElementsByClassName("setOTP")[1].value}${document.getElementsByClassName("setOTP")[2].value}${document.getElementsByClassName("setOTP")[3].value}${document.getElementsByClassName("setOTP")[4].value}${document.getElementsByClassName("setOTP")[5].value}`
@@ -751,8 +769,10 @@ if(response.data.Status=="Success"){
         console.log(otpval,"otpis")
         axios.post("https://api.gharpeshiksha.com/OnlineCourseStudentLogin/verifyotp",param)
         .then(function(response){
+          $(".loader-line").hide();  
+
           console.log(response.data.result)
-          if(response.data.result="Matched"){
+          if(response.data.result=="Matched"){
              console.log({
               isProfileCompleted,
               isUserExists,
@@ -767,19 +787,42 @@ if(response.data.Status=="Success"){
 
             }
             if(isProfileCompleted=="true" && isUserExists=="true"){
+              alert("directlogin")
             
               $(".Login").hide();
               $(".drlogin").show();
               $(".otpcheck").hide();
+              $(".userDetails").hide();
+              $(".loader-line").hide();  
+              $(".Register").hide();
+              $(".otpForLogin").hide();
+              
 
 
             }
             if(isProfileCompleted=="basicinfo"){
               $(".basicinfo").show();
+              $(".drlogin").hide();
+              $(".otpcheck").hide();
+              $(".userDetails").hide();
+              $(".loader-line").hide();  
+              $(".Register").hide();
+              $(".otpForLogin").hide();
+              $(".Login").hide();
+
+
+
 
             }
            
             
+          }
+          else{
+            alert("otp mot matches")
+            $("#otpnotMatches").html("OTP not Matches *")
+            setTimeout(() => {
+              $("#otpnotMatches").html("")
+                 }, 2500);
           }
         })
 
@@ -901,6 +944,9 @@ else if(userpassword !=passwordCnfrm){
 
 }
 else{
+  $(".loader-line").show();  
+
+
   const param=new URLSearchParams()
   
   param.append("phone",`${userPhone}`);
@@ -911,6 +957,15 @@ else{
   axios.post("https://api.gharpeshiksha.com/OnlineCourseStudentLogin/studentSignUp",param)
   .then(function(response){
     console.log(response.data)
+    if(response.data.Message=="successfully registered"){
+      $(".loader-line").hide();
+      $(".userDetails").hide();
+      $(".basicinfo").show();
+
+
+
+
+    }
   
   })
 }
@@ -954,6 +1009,8 @@ $("#Basicverify").click(function(){
 
   }
   else{
+    $(".loader-line").hide();  
+
     const param=new URLSearchParams()
     param.append("phone",`${userPhone}`);
     param.append("course",`${BasicClass}`);
@@ -964,6 +1021,8 @@ $("#Basicverify").click(function(){
     .then(function(response){
       console.log(response.data.Message)
       if(response.data.Message=="successfully registered"){
+        $(".loader-line").hide();  
+
         alert("registerd Successfully")
       }
     
@@ -1064,6 +1123,8 @@ alert("login susccessfully")
 
 })
 //direltlogin
+//resendotp
+//resendotp
 
 // if(Name === "" && Email ==="" && Phoneno ==="" && Password ===""){
 // $("#NameError").html("Fields Can't be empty *")
