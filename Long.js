@@ -32,42 +32,9 @@ $(document).ready(function () {
 }
 
 
-function Boards9 (Def ="9th Class") {
-    // console.log(Def,"hhh");
 
 
 
-  async function test() {
-    const response = await fetch(` https://api.markschamp.com/studentbasic/getCourseVideosDemo?classes=${Def}`);
-    const jason = await response.json();
-    return jason;
-
-  }
-  test().then((res) => {
-    // console.log(res, "vvv")
-    const vedioDataCard = res;
-    localStorage.setItem("demovedios9", JSON.stringify(vedioDataCard));
-    VedioClass9();
-
-  });
-}
-
-
- $(".class_9th").click(function(){
-       $(".Responsives").html("");
-
-   Boards9();
-
- 
-    $(".responsive").hide();
-    $(".Responsives").show();
-
-
-    
-
-  
- 
- })
 
 
 
@@ -154,64 +121,8 @@ async function VedioClass10() {
 
     ]
   });
-  $(".class_10th").click(function () {
-    $('.Responsives').hide();
-    $(".responsive").show()
-    
-    
-    $(".class_10th").css({
-      "background": "#297cba",
-      "color": "#fff",
-      "font-weight": "600",
-      "border": "none",
-      "border-radius": "4px",
-      "margin-right": "10px",
-      "margin-right": " 10px",
-      "padding": "12px 35px",
-
-      "cursor": "pointer",
-
-    });
-    $(".class_9th").css({
-      "border": " 1px solid #297CBA",
-      " margin-right": "10px",
-      "padding": " 12px 35px",
-      "color": "black",
-      "cursor": "pointer",
-      "background": "white",
-
-    });
-  });
-   $(".class_9th").click(function () {
-    
 
   
-   
-
-
-    $(".class_9th").css({
-
-      "color": "#fff",
-      "font-weight": " 600",
-      "border": "none",
-      "border-radius": "4px",
-      "margin-right": "10px",
-      "margin-right": "10px",
-      "padding": "12px 35px",
-      "background-color": "#297bca",
-
-      " cursor": "pointer",
-    });
-    $(".class_10th").css({
-      "border": " 1px solid #297CBA",
-      " margin-right": "10px",
-      "padding": " 12px 35px",
-      "color": "black",
-      "cursor": "pointer",
-      "background-color": "white",
-
-    });
-  });
 
 
 }
@@ -221,134 +132,7 @@ async function VedioClass10() {
 
 
 
-async function VedioClass9() {
-    const vedioCCCard = await JSON.parse(localStorage.getItem("demovedios9"));
-  
-    await vedioCCCard.forEach((element, i) => {
-  
-      const responsive = document.querySelector(".Responsives");
-  
-  
-      const card = document.createElement("div");
-      card.classList = "card";
-      const vedioCard = `<img class="card-img-top" src="/images/videoBackground.jpg" alt="Card image cap">
-          <div class="card-body">
-            <div class="rcfloat">
-              <img src="/images/videoIcon.png" alt="" >
-            </div>
-            <div class="containerRecord">
-              <h3 class="cardTit">${element.classes}</h3>
-              <p class="cardPara">${element.tutorName}</p>
-            </div>
-            <div class="card-title">${element.subject}</div>
-           <div class="vedioTime" style="display: flex;">
-            <div class="vedioLeft">
-              <div class="vedioTxt">${element.topicName}</div>
-              <div class="vTmie">${element.videosLink}</div>
-            </div>
-            <div class="vedioRight">
-            <a href="#" class="btn btn-primary watch" data-toggle="modal" data-target="${'#exampleModal' + element.id}" onclick="openModal('${element.demolinksvideos}','${element.id}','${element.topicName}')">Watch </a></div>
-          </div>
-          </div>`;
-  
-      card.innerHTML += vedioCard;
-      responsive.appendChild(card);
-    });
-  
-    $('.Responsives').slick({
-      dots: true,
-      infinite: true,
-      speed: 300,
-      slidesToShow: 3,
-      slidesToScroll: 3,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            infinite: true,
-            dots: true
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        }
-  
-      ]
-    });
-    $(".class_10th").click(function () {
-      $(".Responsives").hide();
-      // $(".responsive").show();
-      // alert("hello iam");
-      
-      $(".class_10th").css({
-        "background": "#297cba",
-        "color": "#fff",
-        "font-weight": "600",
-        "border": "none",
-        "border-radius": "4px",
-        "margin-right": "10px",
-        "margin-right": " 10px",
-        "padding": "12px 35px",
-  
-        "cursor": "pointer",
-  
-      });
-      $(".class_9th").css({
-        "border": " 1px solid #297CBA",
-        " margin-right": "10px",
-        "padding": " 12px 35px",
-        "color": "black",
-        "cursor": "pointer",
-        "background": "white",
-  
-      });
-    });
-     $(".class_9th").click(function () {
-      
-    
-     
-  
-  
-      $(".class_9th").css({
-  
-        "color": "#fff",
-        "font-weight": " 600",
-        "border": "none",
-        "border-radius": "4px",
-        "margin-right": "10px",
-        "margin-right": "10px",
-        "padding": "12px 35px",
-        "background-color": "#297bca",
-  
-        " cursor": "pointer",
-      });
-      $(".class_10th").css({
-        "border": " 1px solid #297CBA",
-        " margin-right": "10px",
-        "padding": " 12px 35px",
-        "color": "black",
-        "cursor": "pointer",
-        "background-color": "white",
-  
-      });
-    });
-  
-  
-  }
-  
+
 ///class9th
 let watchs = document.querySelectorAll(".watch");
 Array.from(watchs).forEach((item) => {
@@ -818,7 +602,7 @@ if(response.data.Status=="Success"){
             
           }
           else{
-            alert("otp mot matches")
+          
             $("#otpnotMatches").html("OTP not Matches *")
             setTimeout(() => {
               $("#otpnotMatches").html("")
@@ -1021,9 +805,25 @@ $("#Basicverify").click(function(){
     .then(function(response){
       console.log(response.data.Message)
       if(response.data.Message=="successfully registered"){
+        
         $(".loader-line").hide();  
 
         alert("registerd Successfully")
+        localStorage.setItem("LoggedIn",true);
+$(".hideit").css("display","none");
+$(".hideit").removeClass("show");
+location.reload();
+$(".ShowAvtar").show();
+$(".sigbtn").hide();
+$(".Logout").hide();
+$("#Dolog ").click(function(){
+localStorage.setItem("LoggedIn",false);
+$(".ShowAvtar").hide();
+$(".sigbtn").show();
+})
+
+        
+        
       }
     
     })
@@ -1090,24 +890,19 @@ console.log(otpval,"fsdf")
         if(response.data.result="Matched"){
          
 alert("login susccessfully")
-          // if(isProfileCompleted=="undefined" ||isProfileCompleted=="userdetails"){
-          //   console.log("hogya")
+localStorage.setItem("LoggedIn",true);
+$(".hideit").css("display","none");
+$(".hideit").removeClass("show");
+location.reload();
+$(".ShowAvtar").show();
+$(".sigbtn").hide();
+$(".Logout").hide();
+$("#Dolog ").click(function(){
+localStorage.setItem("LoggedIn",false);
+$(".ShowAvtar").hide();
+$(".sigbtn").show();
+})
 
-          //   $(".userDetails").show();
-          //   $(".drlogin").hide();
-          // }
-          // if(isProfileCompleted=="true" && isUserExists=="true"){
-          
-          //   $(".Login").hide();
-          //   $(".drlogin").show();
-          //   $(".otpcheck").hide();
-
-
-          // }
-          // if(isProfileCompleted=="basicinfo"){
-          //   $(".basicinfo").show();
-
-          // }
          
           
         }
@@ -1122,112 +917,44 @@ alert("login susccessfully")
 
 
 })
-//direltlogin
-//resendotp
-//resendotp
+// $("#login").click(function(){
 
-// if(Name === "" && Email ==="" && Phoneno ==="" && Password ===""){
-// $("#NameError").html("Fields Can't be empty *")
-// $("#EmailError").html("Fields Can't be empty *")
-// $("#PasswordError").html("Fields Can't be empty *")
-// $("#PhonenoError").html("Fields Can't be empty *")
-      
-// setTimeout(() => {
-// $("#NameError").html("")
-// $("#EmailError").html("")
-// $("#PasswordError").html("")
-// $("#PhonenoError").html("")
-//     }, 2500);
 
-// }
-// else if(Phoneno.length!=10){
-// $("#PhonenoError").html("Please Enter Valid no *")
-// setTimeout(() => {
-// $(".NameError").html("")
-// $(".EmailError").html("")
-// $(".PasswordError").html("")
-// $(".PhonenoError").html("")
-//     }, 2500);
-// }
-// else if(Name ===""){
-// $("#NameError").html("Fields Can't be empty *")
-// setTimeout(() => {
-// $("#NameError").html("")
-// $("#EmailError").html("")
-// $("#PasswordError").html("")
-// $("#PhonenoError").html("")
-//     }, 2500);
-// }
-// else if(Email ===""){
-// $("#EmailError").html("Fields Can't be empty *")
-// setTimeout(() => {
-// $("#NameError").html("")
-// $("#EmailError").html("")
-// $("#PasswordError").html("")
-// $("#PhonenoError").html("")
-//     }, 2500);
-// }
-// else if(!Email.includes("@")){
-// $("#EmailError").html("Email must have @ *")
-// setTimeout(() => {
-// $("#NameError").html("")
-// $("#EmailError").html("")
-// $("#PasswordError").html("")
-// $("#PhonenoError").html("")
-//     }, 2500);
 
-// }
-// else if(Phoneno ===""){
-// $("#PhonenoError").html("Fields Can't be empty *")
+// let CnfrmPhone =$("#ConfirmPhoneno").val();
+// let CnfrmPassword =$("#ConfirmPassword").val();
+
+// const param =new URLSearchParams()
+// param.append("phoneNoOrEmailid",`${CnfrmPhone}`);
+// param.append("password",`${CnfrmPassword}`);
+
+
+
+
+// if( CnfrmPhone ==="" && CnfrmPassword ===""){
+// $("#phone").html("Fields Can't be empty *")
+// $("#Password").html("Fields Can't be empty *")
+
+     
 // setTimeout(() => {
-// $("#NameError").html("")
-// $("#EmailError").html("")
-// $("#PasswordError").html("")
-// $("#PhonenoError").html("")
-//     }, 2500);
-// }
-// else if(Password ===""){
-// $("#PasswordError").html("Fields Can't be empty *")
-// setTimeout(() => {
-// $("#NameError").html("")
-// $("#EmailError").html("")
-// $("#PasswordError").html("")
-// $("#PhonenoError").html("")
-//     }, 2500);
-// }
-// else if(Password.length<6){
-// $("#PasswordError").html("Password Should not be less than 6 *")
-// setTimeout(() => {
-// $("#NameError").html("")
-// $("#EmailError").html("")
-// $("#PasswordError").html("")
-// $("#PhonenoError").html("")
-//     }, 2500);
-// }
-// else if(Password.length>12){
-// $("#PasswordError").html("Password Should not be greater than 12 *")
-// setTimeout(() => {
-// $("#NameError").html("")
-// $("#EmailError").html("")
-// $("#PasswordError").html("")
-// $("#PhonenoError").html("")
-//     }, 2500);
+// $("#phone").html("")
+// $("#Password").html("")
+// }, 2500);
+
 
 
 
 // }
 // else{
-// axios.post('https://api.markschamp.com//studentbasic/signup',param)
+// axios.post(' https://api.markschamp.com//studentbasic/loginPage',param)
 // .then(function (response) {
-// // console.log(response);
-// // console.log(response.data.message);
-// if(response.data.message=='Successfully Saved.'){
-//   localStorage.setItem("LoggedIn",true);
-//   // console.log("susscessfuly signup")
-//   $(".hideit").css("display","none");
-  
-//   $(".hideit").removeClass("show");
-//   location.reload();
+// //  console.log(response);
+// //  console.log(response.data);
+// if(response.data["message:"]=="Successfull Login"){
+// localStorage.setItem("LoggedIn",true);
+// $(".hideit").css("display","none");
+// $(".hideit").removeClass("show");
+// location.reload();
 // $(".ShowAvtar").show();
 // $(".sigbtn").hide();
 // $(".Logout").hide();
@@ -1238,81 +965,23 @@ alert("login susccessfully")
 // })
 
 
-  
-//   // window.location.href = `${location.origin}/Payment.html?id=${getId}`;
 // }
 
+// else{
+//  $("#phone").html("Phone no and Password doesn't matches *")
+// $("#Password").html("Phone no and Password doesn't matches *")
+// setTimeout(() => {
+// $("#phone").html("")
+// $("#Password").html("")
+// }, 2500);
+// }
 
 // })
 
 // }
 
+
 // })
-$("#login").click(function(){
-
-
-
-let CnfrmPhone =$("#ConfirmPhoneno").val();
-let CnfrmPassword =$("#ConfirmPassword").val();
-
-const param =new URLSearchParams()
-param.append("phoneNoOrEmailid",`${CnfrmPhone}`);
-param.append("password",`${CnfrmPassword}`);
-
-
-
-
-if( CnfrmPhone ==="" && CnfrmPassword ===""){
-$("#phone").html("Fields Can't be empty *")
-$("#Password").html("Fields Can't be empty *")
-
-     
-setTimeout(() => {
-$("#phone").html("")
-$("#Password").html("")
-}, 2500);
-
-
-
-
-}
-else{
-axios.post(' https://api.markschamp.com//studentbasic/loginPage',param)
-.then(function (response) {
-//  console.log(response);
-//  console.log(response.data);
-if(response.data["message:"]=="Successfull Login"){
-localStorage.setItem("LoggedIn",true);
-$(".hideit").css("display","none");
-$(".hideit").removeClass("show");
-location.reload();
-$(".ShowAvtar").show();
-$(".sigbtn").hide();
-$(".Logout").hide();
-$("#Dolog ").click(function(){
-localStorage.setItem("LoggedIn",false);
-$(".ShowAvtar").hide();
-$(".sigbtn").show();
-})
-
-
-}
-
-else{
- $("#phone").html("Phone no and Password doesn't matches *")
-$("#Password").html("Phone no and Password doesn't matches *")
-setTimeout(() => {
-$("#phone").html("")
-$("#Password").html("")
-}, 2500);
-}
-
-})
-
-}
-
-
-})
 let  logged =localStorage.getItem("LoggedIn");
 // console.log(logged);
 if (logged =="true"){

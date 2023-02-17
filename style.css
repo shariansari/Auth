@@ -514,8 +514,18 @@ border-radius: 3px;
         }
 }
 @media screen and (max-width:575px) {
+  
+    .gif{
+        width: 75% !important;
+    }
+    .Register,.userDetails ,.basicinfo,.drlogin{
+        width: 75vw;
+    }
     .modC{
         width: 88% !important;
+    }
+    #signup,#userverify,#Basicverify,#islogindir{
+        width: 100%;
     }
 }
 @media screen and (max-width:560px) {
@@ -613,6 +623,12 @@ border-radius: 3px;
     }
     .telcon{
         display: none !important;
+    }
+       .gif{
+        width: 80vw !important;
+    }
+    .Register{
+        width: 70vw !important;
     }
 }
 .recordedVedio{
